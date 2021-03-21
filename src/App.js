@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+//Custom hookin importti ks. "/src/hooks/index.js"
+import { useField, useCountry } from './hooks'
 
+/*
 const useField = (type) => {
   const [value, setValue] = useState('')
 
@@ -18,12 +21,32 @@ const useField = (type) => {
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
-  useEffect(() => {})
-
+  /*
+    useEffect(() => { 
+      
+    })
+  
+    return country
+  }
+  */
+/*
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('https://restcountries.eu/rest/v2/name/'`${name}`)
+      .then(response => {
+        console.log('promise fulfilled', response)
+        setCountry(response.data)
+      })
+  })
+  console.log('MIKÄ MAAA', country)
   return country
 }
-
+*/
 const Country = ({ country }) => {
+  if (country) {
+    console.log('COUNTRY KOMPONENTTI', country)
+  }
   if (!country) {
     return null
   }
@@ -36,12 +59,13 @@ const Country = ({ country }) => {
     )
   }
 
+  console.log('TULEEKO COUNTRY KOMPONENTIN TÄHÄN VAIHEESEEN')
   return (
     <div>
-      <h3>{country.data.name} </h3>
-      <div>capital {country.data.capital} </div>
-      <div>population {country.data.population}</div> 
-      <img src={country.data.flag} height='100' alt={`flag of ${country.data.name}`}/>  
+      <h3>{country.name} </h3>
+      <div>capital {country.capital} </div>
+      <div>population {country.population}</div>
+      <img src={country.flag} height='100' alt={`flag of ${country.name}`} />
     </div>
   )
 }
@@ -62,7 +86,6 @@ const App = () => {
         <input {...nameInput} />
         <button>find</button>
       </form>
-
       <Country country={country} />
     </div>
   )
